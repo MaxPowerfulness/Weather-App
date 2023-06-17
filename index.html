@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <script src="./dist/bundle.js" defer></script>
+</head>
+<body>
+    <div id="top">
+        <div class="weather-info">
+            <button class="daily">Daily</button>
+            <button class="hourly">Hourly</button>
+        </div>
+        <div class="weather-disp">
+            <div class="day">
+                <p class="label"></p>
+                <img src="" alt="" class="icon seven-day-icon">
+                <div>
+                    <p class="high"></p>
+                    <p class="low"></p>
+                </div>
+            </div>
+            <div class="day">
+                <p class="label"></p>
+                <img src="" alt="" class="icon seven-day-icon">
+                <div>
+                    <p class="high"></p>
+                    <p class="low"></p>
+                </div>
+            </div>
+            <div class="day">
+                <p class="label"></p>
+                <img src="" alt="" class="icon seven-day-icon">
+                <div>
+                    <p class="high"></p>
+                    <p class="low"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="middle">
+        <div class="city-temp">
+            <p class="city"></p>
+            <p class="temp"></p>
+        </div>
+        <div class="time-date">
+            <p class="time"></p>
+            <p class="date"></p>
+        </div>
+        <img src="" alt="" class="condition-icon">
+        <p class="condition"></p>
+        <input type="search" id="searchBar" placeholder="Change Location">
+        <p class="error-message"></p>
+        <div class="temp-units">
+            <p>°F</p>
+            <label class="switch">
+                <input type="checkbox" id="unitToggle">
+                <span class="slider round"></span>
+            </label>
+            <p>°C</p>
+        </div>
+    </div>
+    <div id="bottom">
+        <div class="feels-like-cont right-disp">
+            <img src="./src/images/icons8-thermometer-96.png" alt="" class="icon">
+            <div class="right-cont">
+                <p>Feels like</p>
+                <p class="feels-like"></p>
+            </div>
+        </div>
+        <div class="humidity-cont right-disp">
+            <img src="./src/images/icons8-humidity-100.png" alt="" class="icon">
+            <div class="right-cont">
+                <p>Humidity</p>
+                <p class="humidity"></p>
+            </div>
+        </div>
+        <div class="chance-rain-cont right-disp">
+            <img src="./src/images/rainy.png" alt="" class="icon">
+            <div class="right-cont">
+                <p>Chance of Rain</p>
+                <p class="chance-rain"></p>
+            </div>
+        </div>
+        <div class="wind-cont right-disp">
+            <img src="./src/images/icons8-wind-100.png" alt="" class="icon">
+            <div class="right-cont">
+                <p>Wind</p>
+                <p class="wind"></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
