@@ -8,10 +8,10 @@
     --small-space: 10px;
     --medium-space: 30px;
     --large-space: 50px;
-    --default-font: 20px;
-    --border-radius: 15px;
+    --default-font: 1rem;
 }
 
+/* General */
 
 * {
     margin: 0px;
@@ -63,7 +63,7 @@ body {
 }
 
 button {
-    font-size: 14px;
+    font-size: 0.8rem;
     background: none;
     border: 2px solid rgba(0, 0, 0, 0);
     padding: 5px var(--small-space);
@@ -84,15 +84,24 @@ button:hover {
     font-size: 14px;
 }
 
+.low {
+    font-size: 0.7rem;
+}
+
 /* Middle */
 #middle {
     flex-direction: column;
+    gap: 5px;
 }
 
-.city-temp,
-.time-date {
-    display: flex;
-    gap: var(--small-space);
+.city {
+    font-size: 3.2rem;
+    font-weight: 600;
+}
+
+.time,
+.date {
+    font-size: 0.8rem;
 }
 
 .condition-icon {
@@ -100,9 +109,36 @@ button:hover {
     width: 100px;
 }
 
-.temp-units {
+.temp,
+.condition {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.temp-icon-condition {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 5px;
+}
+
+.temp-units,
+.temp-condition,
+.time-date {
+    display: flex;
+    gap: var(--small-space);
+    align-items: center;
+}
+
+#searchBar {
+    background: none;
+    border: none;
+    border-bottom: black 2px solid;
+    padding-left: var(--small-space);   
+}
+
+#searchBar:focus {
+    outline: none; 
 }
 
 .switch {

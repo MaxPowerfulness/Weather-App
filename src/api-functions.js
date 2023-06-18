@@ -1,12 +1,20 @@
-const errorMessage = document.querySelector('.error-message');
+const middle = document.getElementById('middle')
 
+function makeErrorMessage() {
+    const errorMessage = document.createElement('p');
+    errorMessage.classList.add('error-message');
+    errorMessage.textContent = 'Enter search in the form of "City", "City, State", "City, Country", or "Zip Code"'
+    middle.insertBefore(errorMessage, document.querySelector('.temp-units'));
+}
+
+function removeErrorMessage() {
+    middle.removeChild(document.querySelector('.error-message'));
+}
 
 // Takes a location as a parameter and returns weather information for the location using weatherapi
 async function grabCurrentWeatherData(location) {
-    console.log('location', `${location}`);
     const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=3e2d011cbd1d4bf4996154952233105&q=${location}`, {mode:'cors'}); // Fetches data from server
     const data = await response.json(); // Converts into usable JS code
-    console.log('data:', data);
     return data
 };
 
@@ -19,10 +27,11 @@ async function grabForecastWeatherData(location) {
 // Takes location of interst as a parameter and returns an object that contains all relavent information for the weather app.
 async function getRelaventData(location) {
     try {
-        errorMessage.textContent = '';
+        if (document.querySelector('.error-message')) {
+            removeErrorMessage();
+        };
         const current = await grabCurrentWeatherData(location);
         const forecast = await grabForecastWeatherData(location);
-        console.log('forecast in rel', forecast)
         const relaventData = {
             city: current.location.name,
             temp: current.current.temp_f,
@@ -30,9 +39,9 @@ async function getRelaventData(location) {
             date: current.location.localtime.slice(0, 10),
             condition: current.current.condition.text,
             feelsLike: current.current.feelslike_f,
-            humidity: current.current.humidity,
-            chanceOfRain: forecast.forecast.forecastday[0].day.daily_chance_of_rain,
-            wind: current.current.wind_mph,
+            humidity: current.current.humidity + ' %',
+            chanceOfRain: forecast.forecast.forecastday[0].day.daily_chance_of_rain + ' %',
+            wind: current.current.wind_mph + ' mph',
             sevenDay: {
                 0: {
                     condition: forecast.forecast.forecastday[0].day.condition.text,
@@ -64,8 +73,8 @@ async function getRelaventData(location) {
             cFeelsLike: current.current.feelslike_c,
         };
         return relaventData;
-    } catch (error) {
-        errorMessage.textContent = 'Enter search in the form of "City", "City, State", "City, Country", or "Zip Code"';
+    } catch {
+        makeErrorMessage();
     }
 }
 

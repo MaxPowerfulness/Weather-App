@@ -67,7 +67,6 @@ tempUnitToggle.addEventListener('click', () => changeTempUnit());
 async function displayData(location, unit) {
     let index = -1;
     const data = await getRelaventData(location);
-    console.log('data in event', data);
     
     for (let key in data) {
         index++;
@@ -76,17 +75,17 @@ async function displayData(location, unit) {
         };
         if (key === 'temp') {
             if (unit === 'celsius') {
-                elementList[index].textContent = data['cTemp'] + '°C';
+                elementList[index].textContent = data['cTemp'] + ' °C';
             } else {
-                elementList[index].textContent = data[key];      
+                elementList[index].textContent = data[key] + ' °F';      
             };
             continue
         };
         if (key === 'feelsLike') {
             if (unit === 'celsius') {
-                elementList[index].textContent = data['cFeelsLike'];
+                elementList[index].textContent = data['cFeelsLike'] + ' °C';
             } else {
-                elementList[index].textContent = data[key];
+                elementList[index].textContent = data[key] + ' °F';
             };
             continue
         }
@@ -100,18 +99,18 @@ async function displayData(location, unit) {
         if (key === 'sevenDay') {
             if (hourlyBtn.style.border === '2px solid black') {
                 if (tempUnitToggle.checked) {
-                    displayHourly(data, 'temp_c');
+                    displayHourly(data, 'temp_c', ' °C');
                     break
                 } else {
-                    displayHourly(data, 'temp_f');
+                    displayHourly(data, 'temp_f', ' °F');
                     break
                 };
             }
             if (tempUnitToggle.checked) {
-                displayDaily(data, 'cMax', 'cMin');
+                displayDaily(data, 'cMax', 'cMin', ' °C');
                 break
             } else {
-                displayDaily(data, 'fMax', 'fMin');
+                displayDaily(data, 'fMax', 'fMin', ' °F');
                 break
             };
         };
@@ -119,16 +118,16 @@ async function displayData(location, unit) {
     };
 
     // Removes previous event listeners and adds new ones specific to current location and temp unit
-    hourly.removeEventListener('click', () => displayHourly(data, 'temp_c'));
-    daily.removeEventListener('click', () => displayDaily(data, 'cMax', 'cMin'));
-    hourly.removeEventListener('click', () => displayHourly(data, 'temp_f'));
-    daily.removeEventListener('click', () => displayDaily(data, 'fMax', 'fMin'));
+    hourly.removeEventListener('click', () => displayHourly(data, 'temp_c', ' °C'));
+    daily.removeEventListener('click', () => displayDaily(data, 'cMax', 'cMin', ' °C'));
+    hourly.removeEventListener('click', () => displayHourly(data, 'temp_f', ' °F'));
+    daily.removeEventListener('click', () => displayDaily(data, 'fMax', 'fMin', ' °F'));
     if (unit === 'celsius') {
-        hourly.addEventListener('click', () => displayHourly(data, 'temp_c'));
-        daily.addEventListener('click', () => displayDaily(data, 'cMax', 'cMin'));
+        hourly.addEventListener('click', () => displayHourly(data, 'temp_c', ' °C'));
+        daily.addEventListener('click', () => displayDaily(data, 'cMax', 'cMin', ' °C'));
     } else {
-        hourly.addEventListener('click', () => displayHourly(data, 'temp_f'));
-        daily.addEventListener('click', () => displayDaily(data, 'fMax', 'fMin'));
+        hourly.addEventListener('click', () => displayHourly(data, 'temp_f',' °F'));
+        daily.addEventListener('click', () => displayDaily(data, 'fMax', 'fMin', ' °F'));
     }
 }
 
@@ -161,17 +160,17 @@ function displayCorrectIcon(condition) {
     }
 }
     // Takes in the relavent data object as a parameter and displays a 7 day forecast, including the high, low, and an icon that corresponds to the weather condition.
-function displayDaily(data, unitMax, unitMin) {
+function displayDaily(data, unitMax, unitMin, unit) {
     removeHourlyDisp();
     for (let key in data.sevenDay) {
         sevenDayIcons[key].src = displayCorrectIcon(data.sevenDay[key].condition); //fix icon assigning
-        sevenDayHighs[key].textContent = data.sevenDay[key][unitMax];
-        sevenDayLows[key].textContent = data.sevenDay[key][unitMin];
+        sevenDayHighs[key].textContent = data.sevenDay[key][unitMax] + unit;
+        sevenDayLows[key].textContent = data.sevenDay[key][unitMin] + unit;
         labels[key].textContent = weekdays[new Date(data.sevenDay[key].date).getDay()];
     };
 }
     // Takes in relavent data object as a parameter and displays an hourly forecast, including the current temperature and an icon that corresponds to the weather condition.
-function displayHourly(data, tempUnit) {
+function displayHourly(data, tempUnit, unit) {
     removeHourlyDisp();
     for (let i = 0; i < 4; i++) {
         makeHourlyDisplay();    // Adds additional blocks since only 3 day forecast can be displayed.
@@ -188,7 +187,7 @@ function displayHourly(data, tempUnit) {
         };
         labels[i].textContent = data.hourly[currentHour].time.slice(11, 16);
         day[i].src = displayCorrectIcon(data.hourly[currentHour].condition.text);
-        topTempDisp[i].textContent = data.hourly[currentHour][tempUnit];
+        topTempDisp[i].textContent = data.hourly[currentHour][tempUnit] + unit;
         botTempDisp[i].innerHTML = '<br>';
         currentHour++
     }
